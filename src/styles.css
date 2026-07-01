@@ -176,3 +176,29 @@
 @utility font-display {
   font-family: var(--font-display);
 }
+
+/* 3D animation utilities */
+@utility perspective-1000 {
+  perspective: 1000px;
+}
+@utility preserve-3d {
+  transform-style: preserve-3d;
+}
+
+@keyframes float-3d {
+  0%, 100% { transform: translateY(0) rotateX(0deg) rotateY(0deg); }
+  50%      { transform: translateY(-12px) rotateX(4deg) rotateY(-4deg); }
+}
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes ember-rise {
+  0%   { transform: translate3d(0, 0, 0) scale(1); opacity: 0; }
+  10%  { opacity: 0.9; }
+  100% { transform: translate3d(var(--dx, 20px), -420px, 0) scale(0.3); opacity: 0; }
+}
+
+.animate-float-3d { animation: float-3d 7s ease-in-out infinite; }
+.animate-spin-slow { animation: spin-slow 40s linear infinite; }
+.animate-ember { animation: ember-rise 6s linear infinite; }
