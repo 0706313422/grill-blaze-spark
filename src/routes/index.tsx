@@ -77,6 +77,7 @@ function Index() {
           <div className="hidden md:flex gap-8 text-xs uppercase tracking-widest text-hearth-text/60">
             <a href="#menu" className="hover:text-hearth-text transition-colors">The Menu</a>
             <a href="#hearth" className="hover:text-hearth-text transition-colors">The Hearth</a>
+            <a href="#bar" className="hover:text-hearth-text transition-colors">The Bar</a>
             <a href="#location" className="hover:text-hearth-text transition-colors">Location</a>
           </div>
           <a
