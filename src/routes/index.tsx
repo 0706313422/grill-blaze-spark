@@ -212,6 +212,45 @@ function Index() {
       </section>
 
       {/* Reservation + Location */}
+      {/* The Bar */}
+      <section id="bar" className="py-24 px-6 bg-hearth-surface/50 border-y border-hearth-border">
+        <div className="max-w-screen-xl mx-auto">
+          <div className="flex flex-col md:flex-row justify-between items-baseline mb-16 gap-4">
+            <div>
+              <span className="text-ember text-[11px] uppercase tracking-[0.3em] font-medium mb-4 block">
+                From The Bar
+              </span>
+              <h2 className="font-display text-3xl md:text-5xl font-medium text-balance max-w-[20ch]">
+                Poured with the same discipline.
+              </h2>
+            </div>
+            <p className="text-hearth-text/50 text-sm max-w-[40ch]">
+              An 80-bin cellar, a rye-forward cocktail program, and six drafts from local craft breweries.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {pours.map((p) => (
+              <article key={p.name} className="group">
+                <div className="w-full aspect-[6/7] overflow-hidden rounded-md ring-1 ring-hearth-border mb-6">
+                  <img
+                    src={p.img}
+                    alt={p.name}
+                    loading="lazy"
+                    width={600}
+                    height={700}
+                    className="w-full h-full object-cover transition-transform duration-[900ms] group-hover:scale-105"
+                  />
+                </div>
+                <span className="text-[10px] uppercase tracking-[0.2em] text-ember">{p.tag}</span>
+                <h3 className="font-display text-2xl font-medium mt-2 mb-2">{p.name}</h3>
+                <p className="text-sm text-hearth-text/60 leading-relaxed text-pretty">{p.desc}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Reservation + Location */}
       <section id="reserve" className="py-24 px-6 border-t border-hearth-border">
         <div className="max-w-screen-xl mx-auto grid md:grid-cols-2 gap-16">
           <div id="location">
