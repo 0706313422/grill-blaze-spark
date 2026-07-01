@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useRef, type ReactNode } from "react";
 import heroRibeye from "@/assets/hero-ribeye.jpg";
 import cutTomahawk from "@/assets/cut-tomahawk.jpg";
 import cutWagyu from "@/assets/cut-wagyu.jpg";
@@ -67,6 +68,32 @@ const pours = [
   },
 ];
 
+function Tilt3D({ children, className = "", max = 12 }: { children: ReactNode; className?: string; max?: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const el = ref.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width - 0.5;
+    const py = (e.clientY - r.top) / r.height - 0.5;
+    el.style.transform = `perspective(1000px) rotateY(${px * max}deg) rotateX(${-py * max}deg) translateZ(0)`;
+  };
+  const onLeave = () => {
+    const el = ref.current;
+    if (el) el.style.transform = "perspective(1000px) rotateY(0) rotateX(0) translateZ(0)";
+  };
+  return (
+    <div
+      ref={ref}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+      className={`transition-transform duration-300 ease-out will-change-transform ${className}`}
+    >
+      {children}
+    </div>
+  );
+}
+
 function Index() {
   return (
     <div className="bg-hearth-bg text-hearth-text font-sans antialiased min-h-screen">
@@ -96,6 +123,21 @@ function Index() {
           className="pointer-events-none absolute -top-20 -left-20 h-96 w-96 rounded-full blur-[120px] opacity-30"
           style={{ background: "var(--ember)" }}
         />
+        {/* Floating ember particles */}
+        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+          {Array.from({ length: 14 }).map((_, i) => (
+            <span
+              key={i}
+              className="absolute bottom-0 block h-1.5 w-1.5 rounded-full bg-ember shadow-[0_0_12px_var(--ember-glow)] animate-ember"
+              style={{
+                left: `${(i * 73) % 100}%`,
+                animationDelay: `${(i * 0.7) % 6}s`,
+                animationDuration: `${5 + (i % 4)}s`,
+                ["--dx" as string]: `${(i % 2 === 0 ? 1 : -1) * (10 + (i % 5) * 6)}px`,
+              }}
+            />
+          ))}
+        </div>
         <div className="max-w-screen-xl mx-auto relative">
           <div className="grid lg:grid-cols-12 gap-12 items-end">
             <div className="lg:col-span-7">
@@ -121,14 +163,23 @@ function Index() {
               </div>
             </div>
             <div className="lg:col-span-5">
-              <div className="w-full aspect-[4/5] overflow-hidden rounded-md ring-1 ring-hearth-border">
-                <img
-                  src={heroRibeye}
-                  alt="Marbled ribeye with sea salt crystals"
-                  width={800}
-                  height={1000}
-                  className="w-full h-full object-cover"
-                />
+              <div className="perspective-1000">
+                <Tilt3D max={14} className="animate-float-3d">
+                  <div className="relative w-full aspect-[4/5] overflow-hidden rounded-md ring-1 ring-hearth-border shadow-[0_40px_80px_-20px_rgba(0,0,0,0.6)]">
+                    <img
+                      src={heroRibeye}
+                      alt="Marbled ribeye with sea salt crystals"
+                      width={800}
+                      height={1000}
+                      className="w-full h-full object-cover"
+                    />
+                    <div
+                      aria-hidden
+                      className="pointer-events-none absolute -inset-8 rounded-full opacity-30 blur-3xl animate-spin-slow"
+                      style={{ background: "conic-gradient(from 0deg, transparent, var(--ember) 40%, transparent 70%)" }}
+                    />
+                  </div>
+                </Tilt3D>
               </div>
             </div>
           </div>
@@ -148,17 +199,19 @@ function Index() {
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {cuts.map((c) => (
-              <article key={c.name} className="group">
-                <div className="w-full aspect-square overflow-hidden rounded-md ring-1 ring-hearth-border mb-6">
-                  <img
-                    src={c.img}
-                    alt={c.name}
-                    loading="lazy"
-                    width={600}
-                    height={600}
-                    className="w-full h-full object-cover transition-transform duration-[900ms] group-hover:scale-105"
-                  />
-                </div>
+              <article key={c.name} className="group perspective-1000">
+                <Tilt3D className="mb-6">
+                  <div className="w-full aspect-square overflow-hidden rounded-md ring-1 ring-hearth-border shadow-[0_25px_50px_-15px_rgba(0,0,0,0.5)]">
+                    <img
+                      src={c.img}
+                      alt={c.name}
+                      loading="lazy"
+                      width={600}
+                      height={600}
+                      className="w-full h-full object-cover transition-transform duration-[900ms] group-hover:scale-110"
+                    />
+                  </div>
+                </Tilt3D>
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-[10px] uppercase tracking-[0.2em] text-ember">{c.tag}</span>
                   <span className="text-sm text-hearth-text/60 italic">${c.price}</span>
@@ -230,17 +283,19 @@ function Index() {
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {pours.map((p) => (
-              <article key={p.name} className="group">
-                <div className="w-full aspect-[6/7] overflow-hidden rounded-md ring-1 ring-hearth-border mb-6">
-                  <img
-                    src={p.img}
-                    alt={p.name}
-                    loading="lazy"
-                    width={600}
-                    height={700}
-                    className="w-full h-full object-cover transition-transform duration-[900ms] group-hover:scale-105"
-                  />
-                </div>
+              <article key={p.name} className="group perspective-1000">
+                <Tilt3D className="mb-6" max={10}>
+                  <div className="w-full aspect-[6/7] overflow-hidden rounded-md ring-1 ring-hearth-border shadow-[0_25px_50px_-15px_rgba(0,0,0,0.5)]">
+                    <img
+                      src={p.img}
+                      alt={p.name}
+                      loading="lazy"
+                      width={600}
+                      height={700}
+                      className="w-full h-full object-cover transition-transform duration-[900ms] group-hover:scale-110"
+                    />
+                  </div>
+                </Tilt3D>
                 <span className="text-[10px] uppercase tracking-[0.2em] text-ember">{p.tag}</span>
                 <h3 className="font-display text-2xl font-medium mt-2 mb-2">{p.name}</h3>
                 <p className="text-sm text-hearth-text/60 leading-relaxed text-pretty">{p.desc}</p>
