@@ -4,6 +4,9 @@ import cutTomahawk from "@/assets/cut-tomahawk.jpg";
 import cutWagyu from "@/assets/cut-wagyu.jpg";
 import cutOctopus from "@/assets/cut-octopus.jpg";
 import openKitchen from "@/assets/open-kitchen.jpg";
+import drinkBeer from "@/assets/drink-beer.jpg";
+import drinkOldFashioned from "@/assets/drink-oldfashioned.jpg";
+import drinkWine from "@/assets/drink-wine.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -40,6 +43,27 @@ const cuts = [
     desc: "Double-tenderized tentacle, Spanish chorizo, and saffron aioli seared over glowing embers.",
     img: cutOctopus,
     price: "38",
+  },
+];
+
+const pours = [
+  {
+    name: "Cellar Reds",
+    tag: "By the Glass",
+    desc: "A rotating list of bold Old-World reds — Barolo, Rioja Gran Reserva, and Northern Rhône Syrah.",
+    img: drinkWine,
+  },
+  {
+    name: "Smoked Old Fashioned",
+    tag: "House Cocktail",
+    desc: "Rye, demerara, and bitters finished tableside under a dome of applewood smoke.",
+    img: drinkOldFashioned,
+  },
+  {
+    name: "Draft & Local Ales",
+    tag: "On Tap",
+    desc: "Six rotating drafts from Chicago's craft breweries — amber lagers, hazy IPAs, and dark stouts.",
+    img: drinkBeer,
   },
 ];
 
