@@ -4,6 +4,9 @@ import cutTomahawk from "@/assets/cut-tomahawk.jpg";
 import cutWagyu from "@/assets/cut-wagyu.jpg";
 import cutOctopus from "@/assets/cut-octopus.jpg";
 import openKitchen from "@/assets/open-kitchen.jpg";
+import drinkBeer from "@/assets/drink-beer.jpg";
+import drinkOldFashioned from "@/assets/drink-oldfashioned.jpg";
+import drinkWine from "@/assets/drink-wine.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -43,6 +46,27 @@ const cuts = [
   },
 ];
 
+const pours = [
+  {
+    name: "Cellar Reds",
+    tag: "By the Glass",
+    desc: "A rotating list of bold Old-World reds — Barolo, Rioja Gran Reserva, and Northern Rhône Syrah.",
+    img: drinkWine,
+  },
+  {
+    name: "Smoked Old Fashioned",
+    tag: "House Cocktail",
+    desc: "Rye, demerara, and bitters finished tableside under a dome of applewood smoke.",
+    img: drinkOldFashioned,
+  },
+  {
+    name: "Draft & Local Ales",
+    tag: "On Tap",
+    desc: "Six rotating drafts from Chicago's craft breweries — amber lagers, hazy IPAs, and dark stouts.",
+    img: drinkBeer,
+  },
+];
+
 function Index() {
   return (
     <div className="bg-hearth-bg text-hearth-text font-sans antialiased min-h-screen">
@@ -53,6 +77,7 @@ function Index() {
           <div className="hidden md:flex gap-8 text-xs uppercase tracking-widest text-hearth-text/60">
             <a href="#menu" className="hover:text-hearth-text transition-colors">The Menu</a>
             <a href="#hearth" className="hover:text-hearth-text transition-colors">The Hearth</a>
+            <a href="#bar" className="hover:text-hearth-text transition-colors">The Bar</a>
             <a href="#location" className="hover:text-hearth-text transition-colors">Location</a>
           </div>
           <a
@@ -183,6 +208,45 @@ function Index() {
               </div>
             ))}
           </dl>
+        </div>
+      </section>
+
+      {/* Reservation + Location */}
+      {/* The Bar */}
+      <section id="bar" className="py-24 px-6 bg-hearth-surface/50 border-y border-hearth-border">
+        <div className="max-w-screen-xl mx-auto">
+          <div className="flex flex-col md:flex-row justify-between items-baseline mb-16 gap-4">
+            <div>
+              <span className="text-ember text-[11px] uppercase tracking-[0.3em] font-medium mb-4 block">
+                From The Bar
+              </span>
+              <h2 className="font-display text-3xl md:text-5xl font-medium text-balance max-w-[20ch]">
+                Poured with the same discipline.
+              </h2>
+            </div>
+            <p className="text-hearth-text/50 text-sm max-w-[40ch]">
+              An 80-bin cellar, a rye-forward cocktail program, and six drafts from local craft breweries.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {pours.map((p) => (
+              <article key={p.name} className="group">
+                <div className="w-full aspect-[6/7] overflow-hidden rounded-md ring-1 ring-hearth-border mb-6">
+                  <img
+                    src={p.img}
+                    alt={p.name}
+                    loading="lazy"
+                    width={600}
+                    height={700}
+                    className="w-full h-full object-cover transition-transform duration-[900ms] group-hover:scale-105"
+                  />
+                </div>
+                <span className="text-[10px] uppercase tracking-[0.2em] text-ember">{p.tag}</span>
+                <h3 className="font-display text-2xl font-medium mt-2 mb-2">{p.name}</h3>
+                <p className="text-sm text-hearth-text/60 leading-relaxed text-pretty">{p.desc}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
